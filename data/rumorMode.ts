@@ -1,0 +1,77 @@
+import { GameMode } from "@/lib/types";
+
+export const rumorMode: GameMode = {
+  id: "rumor",
+  title: "デマ拡散ストッパー",
+  description:
+    "流れてくる投稿に対して、拡散・保留・裏取り・注意書き付与・非表示を判断し、社会全体のバランスを保ってください。",
+  meters: [
+    { key: "anxiety", label: "社会不安", initial: 35 },
+    { key: "trust", label: "信頼度", initial: 55 },
+    { key: "freedom", label: "自由度", initial: 60 },
+    { key: "flow", label: "情報流通", initial: 65 },
+  ],
+  actions: [
+    { key: "share", label: "拡散" },
+    { key: "hold", label: "保留" },
+    { key: "factcheck", label: "裏取り" },
+    { key: "label", label: "注意書き" },
+    { key: "hide", label: "非表示" },
+  ],
+  cards: [
+    {
+      id: "1",
+      author: "速報まとめ局",
+      handle: "@news_flash24",
+      body: "市内で大規模停電が発生中との投稿が拡散。『水も止まるので今すぐ買い占めを』という文面つき。",
+      timeLabel: "2分前",
+      likes: 412,
+      reposts: 201,
+      verified: false,
+      truthType: "misleading",
+      effects: {
+        share: { anxiety: +18, trust: -10, flow: +8 },
+        hold: { anxiety: +3, flow: -2 },
+        factcheck: { trust: +7, flow: -5 },
+        label: { anxiety: -3, trust: +4, freedom: -1 },
+        hide: { anxiety: -8, freedom: -7, flow: -8 },
+      },
+    },
+    {
+      id: "2",
+      author: "市役所防災課",
+      handle: "@city_bousai",
+      body: "先ほどの停電情報について、一部地域のみ影響が確認されています。デマに注意し、公式発表を確認してください。",
+      timeLabel: "1分前",
+      likes: 923,
+      reposts: 310,
+      verified: true,
+      truthType: "true",
+      effects: {
+        share: { trust: +10, anxiety: -8, flow: +7 },
+        hold: { flow: -4, trust: -2 },
+        factcheck: { trust: +3, flow: -2 },
+        label: { trust: +4, flow: +1, freedom: -1 },
+        hide: { trust: -10, freedom: -8, flow: -9 },
+      },
+    },
+    {
+      id: "3",
+      author: "健康メモ",
+      handle: "@health_note_7",
+      body: "『このお茶を飲めば感染症を完全予防できる』という体験談スレ。本人は善意で紹介している様子。",
+      timeLabel: "9分前",
+      likes: 270,
+      reposts: 143,
+      verified: false,
+      truthType: "false",
+      effects: {
+        share: { anxiety: +6, trust: -7, flow: +6 },
+        hold: { flow: -1 },
+        factcheck: { trust: +8, flow: -4 },
+        label: { trust: +5, anxiety: -2, freedom: -1 },
+        hide: { anxiety: -4, freedom: -5, flow: -6 },
+      },
+    },
+  ],
+};
