@@ -23,30 +23,48 @@ export function applyEffect(
     const delta = effect[key] ?? 0;
     const min = meterDef.min ?? 0;
     const max = meterDef.max ?? 100;
-    next[key] = clamp(next[key] + delta, min, max);
+    next[key] = clamp((next[key] ?? 0) + delta, min, max);
   }
 
   return next;
 }
 
-export function getEndingComment(meters: MeterState): string {
-  const { anxiety, trust, freedom, flow } = meters;
+export function getEndingComment(mode: GameMode, meters: MeterState): string {
+  if (mode.id === "rumor") {
+    const anxiety = meters.anxiety ?? 0;
+    const trust = meters.trust ?? 0;
+    const freedom = meters.freedom ?? 0;
+    const flow = meters.flow ?? 0;
 
-  if (anxiety >= 75 && trust <= 35) {
-    return "誤情報が広く拡散し、社会の混乱が深まりました。人々は何を信じればよいのかわからなくなっています。";
+    if (anxiety >= 75 && trust <= 35) {
+      return "誤情報が広く拡散し、社会の混乱が深まりました。";
+    }
+    if (freedom <= 25 && flow <= 25) {
+      return "情報統制が強すぎて、真実まで届きにくい社会になりました。";
+    }
+    if (trust >= 70 && anxiety <= 40 && freedom >= 45) {
+      return "信頼と自由のバランスが比較的保たれました。";
+    }
+    return "情報空間は維持されましたが、各所にゆがみが残っています。";
   }
 
-  if (freedom <= 25 && flow <= 25) {
-    return "情報統制が強すぎて、真実まで届きにくい社会になりました。安全は増した一方で、自由な流通は大きく失われています。";
+  if (mode.id === "yami-baito") {
+    const risk = meters.risk ?? 0;
+    const safety = meters.safety ?? 0;
+    const money = meters.money ?? 0;
+    const alertness = meters.alertness ?? 0;
+
+    if (risk >= 75 && safety <= 30) {
+      return "危険な募集を見抜けず、深刻なリスクに近づいてしまいました。";
+    }
+    if (safety >= 70 && alertness >= 70) {
+      return "違和感のある求人を適切に見抜き、安全を守ることができました。";
+    }
+    if (money <= 20 && safety >= 60) {
+      return "慎重に行動したため安全は守られましたが、収入機会はかなり限られました。";
+    }
+    return "いくつか危ない兆候には気づけましたが、まだ見抜ききれない募集も残っています。";
   }
 
-  if (trust >= 70 && anxiety <= 40 && freedom >= 45) {
-    return "慎重な対応によって信頼と自由のバランスが保たれました。完全ではないものの、健全な情報空間に近づいています。";
-  }
-
-  if (flow <= 30) {
-    return "誤情報は抑えられましたが、情報流通そのものが停滞しました。社会は静かですが、必要な情報も届きにくくなっています。";
-  }
-
-  return "情報空間はどうにか維持されましたが、各所にひずみが残っています。何を優先するかで社会の姿は大きく変わるようです。";
+  return "結果を集計しました。";
 }

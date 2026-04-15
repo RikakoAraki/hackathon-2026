@@ -1,11 +1,23 @@
-export type MeterKey = "anxiety" | "trust" | "freedom" | "flow";
+export type MeterKey =
+  | "anxiety"
+  | "trust"
+  | "freedom"
+  | "flow"
+  | "risk"
+  | "money"
+  | "safety"
+  | "alertness";
 
 export type ActionKey =
   | "share"
   | "hold"
   | "factcheck"
   | "label"
-  | "hide";
+  | "hide"
+  | "apply"
+  | "investigate"
+  | "report"
+  | "block";
 
 export type Effect = Partial<Record<MeterKey, number>>;
 
@@ -22,19 +34,28 @@ export type ActionDefinition = {
   label: string;
 };
 
-export type RumorTruthType = "true" | "false" | "half_true" | "misleading";
+export type CardType = "rumor" | "job";
 
 export type GameCard = {
   id: string;
-  author: string;
-  handle: string;
+  type: CardType;
+  title?: string;
   body: string;
-  timeLabel: string;
-  likes: number;
-  reposts: number;
-  verified?: boolean;
-  truthType: RumorTruthType;
   effects: Record<ActionKey, Effect>;
+
+  author?: string;
+  handle?: string;
+  timeLabel?: string;
+  likes?: number;
+  reposts?: number;
+  verified?: boolean;
+
+  company?: string;
+  wage?: string;
+  location?: string;
+  shift?: string;
+  tags?: string[];
+  contact?: string;
 };
 
 export type GameMode = {
@@ -46,4 +67,4 @@ export type GameMode = {
   cards: GameCard[];
 };
 
-export type MeterState = Record<MeterKey, number>;
+export type MeterState = Partial<Record<MeterKey, number>>;
