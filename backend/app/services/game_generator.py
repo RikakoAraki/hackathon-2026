@@ -56,66 +56,66 @@ def build_user_prompt(req: GenerateGameRequest) -> str:
     meta = get_mode_meta(req.mode_type)
 
     return f"""
-モード: {req.mode_type}
-難易度: {req.difficulty}
-カード枚数: {req.card_count}
+        モード: {req.mode_type}
+        難易度: {req.difficulty}
+        カード枚数: {req.card_count}
 
-このゲームの意図:
-- タイトルは {meta["title_hint"]} に合うもの
-- 説明は {meta["description_hint"]}
-- 題材は {meta["theme_detail"]}
+        このゲームの意図:
+        - タイトルは {meta["title_hint"]} に合うもの
+        - 説明は {meta["description_hint"]}
+        - 題材は {meta["theme_detail"]}
 
-actions の label は次を厳守:
-- apply: {meta["apply_label"]}
-- ignore: 無視する
-- report: 通報する
+        actions の label は次を厳守:
+        - apply: {meta["apply_label"]}
+        - ignore: 無視する
+        - report: 通報する
 
-以下のJSON構造で返してください:
-{{
-  "title": "...",
-  "description": "...",
-  "meters": [
-    {{
-      "key": "safety",
-      "label": "安全度",
-      "min": 0,
-      "max": 100,
-      "initial": 50
-    }},
-    {{
-      "key": "risk",
-      "label": "危険度",
-      "min": 0,
-      "max": 100,
-      "initial": 50
-    }},
-    {{
-      "key": "awareness",
-      "label": "警戒心",
-      "min": 0,
-      "max": 100,
-      "initial": 50
-    }}
-  ],
-  "actions": [
-    {{ "key": "apply", "label": "{meta["apply_label"]}" }},
-    {{ "key": "ignore", "label": "無視する" }},
-    {{ "key": "report", "label": "通報する" }}
-  ],
-  "cards": [
-    {{
-      "id": "card_1",
-      "title": "...",
-      "description": "...",
-      "effects": {{
-        "apply": {{ "values": {{ "risk": 10, "safety": -5, "awareness": -5 }} }},
-        "ignore": {{ "values": {{ "risk": -5, "awareness": 5 }} }},
-        "report": {{ "values": {{ "risk": -10, "safety": 10, "awareness": 10 }} }}
-      }}
-    }}
-  ]
-}}
-"""
+        以下のJSON構造で返してください:
+        {{
+        "title": "...",
+        "description": "...",
+        "meters": [
+            {{
+            "key": "safety",
+            "label": "安全度",
+            "min": 0,
+            "max": 100,
+            "initial": 50
+            }},
+            {{
+            "key": "risk",
+            "label": "危険度",
+            "min": 0,
+            "max": 100,
+            "initial": 50
+            }},
+            {{
+            "key": "awareness",
+            "label": "警戒心",
+            "min": 0,
+            "max": 100,
+            "initial": 50
+            }}
+        ],
+        "actions": [
+            {{ "key": "apply", "label": "{meta["apply_label"]}" }},
+            {{ "key": "ignore", "label": "無視する" }},
+            {{ "key": "report", "label": "通報する" }}
+        ],
+        "cards": [
+            {{
+            "id": "card_1",
+            "title": "...",
+            "description": "...",
+            "effects": {{
+                "apply": {{ "values": {{ "risk": 10, "safety": -5, "awareness": -5 }} }},
+                "ignore": {{ "values": {{ "risk": -5, "awareness": 5 }} }},
+                "report": {{ "values": {{ "risk": -10, "safety": 10, "awareness": 10 }} }}
+            }}
+            }}
+        ]
+        }}
+        """
 
 
 def generate_game_mode(req: GenerateGameRequest) -> GameMode:
