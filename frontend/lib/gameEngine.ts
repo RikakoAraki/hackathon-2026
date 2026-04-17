@@ -1,4 +1,9 @@
-import { Effect, GameMode, MeterKey, MeterState } from "./types";
+import {
+  CardEffect,
+  GameMode,
+  MeterKey,
+  MeterState,
+} from "./types";
 
 export function createInitialMeters(mode: GameMode): MeterState {
   return mode.meters.reduce((acc, meter) => {
@@ -13,24 +18,34 @@ export function clamp(value: number, min = 0, max = 100) {
 
 export function applyEffect(
   meters: MeterState,
-  effect: Effect,
+  effect: CardEffect | undefined,
   mode: GameMode
 ): MeterState {
   const next = { ...meters };
 
+  if (!effect) return next;
+
   for (const meterDef of mode.meters) {
     const key = meterDef.key as MeterKey;
-    const delta = effect[key] ?? 0;
+    const delta = effect.values[key] ?? 0;
     const min = meterDef.min ?? 0;
     const max = meterDef.max ?? 100;
-    next[key] = clamp((next[key] ?? 0) + delta, min, max);
+    next[key] = clamp((next[key] ?? meterDef.initial ?? 0) + delta, min, max);
   }
 
   return next;
 }
 
 export function getEndingComment(mode: GameMode, meters: MeterState): string {
-  if (mode.id === "rumor") {
+  const meterKeys = new Set(mode.meters.map((m) => m.key));
+
+  // rumor系
+  if (
+    meterKeys.has("anxiety") ||
+    meterKeys.has("trust") ||
+    meterKeys.has("freedom") ||
+    meterKeys.has("flow")
+  ) {
     const anxiety = meters.anxiety ?? 0;
     const trust = meters.trust ?? 0;
     const freedom = meters.freedom ?? 0;
@@ -48,11 +63,18 @@ export function getEndingComment(mode: GameMode, meters: MeterState): string {
     return "情報空間は維持されましたが、各所にゆがみが残っています。";
   }
 
-  if (mode.id === "yami-baito") {
+  // yami-baito系
+  if (
+    meterKeys.has("risk") ||
+    meterKeys.has("safety") ||
+    meterKeys.has("money") ||
+    meterKeys.has("alertness") ||
+    meterKeys.has("awareness")
+  ) {
     const risk = meters.risk ?? 0;
     const safety = meters.safety ?? 0;
-    const money = meters.money ?? 0;
-    const alertness = meters.alertness ?? 0;
+    const money = meters.money ?? 50;
+    const alertness = meters.alertness ?? meters.awareness ?? 0;
 
     if (risk >= 75 && safety <= 30) {
       return "危険な募集を見抜けず、深刻なリスクに近づいてしまいました。";
