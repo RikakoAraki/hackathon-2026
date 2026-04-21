@@ -6,7 +6,8 @@ export type MeterKey =
   | "risk"
   | "money"
   | "safety"
-  | "alertness";
+  | "alertness"
+  | "awareness";
 
 export type ActionKey =
   | "share"
@@ -17,9 +18,14 @@ export type ActionKey =
   | "apply"
   | "investigate"
   | "report"
-  | "block";
+  | "block"
+  | "ignore";
 
-export type Effect = Partial<Record<MeterKey, number>>;
+export type EffectValues = Partial<Record<MeterKey, number>>;
+
+export type CardEffect = {
+  values: EffectValues;
+};
 
 export type MeterDefinition = {
   key: MeterKey;
@@ -38,10 +44,11 @@ export type CardType = "rumor" | "job";
 
 export type GameCard = {
   id: string;
-  type: CardType;
+  type?: CardType;
   title?: string;
-  body: string;
-  effects: Record<ActionKey, Effect>;
+  body?: string;
+  description?: string;
+  effects: Partial<Record<ActionKey, CardEffect>>;
 
   author?: string;
   handle?: string;
@@ -59,12 +66,16 @@ export type GameCard = {
 };
 
 export type GameMode = {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   meters: MeterDefinition[];
   actions: ActionDefinition[];
   cards: GameCard[];
+  ending_comments?: {
+    title: string;
+    body: string;
+  }[] | null;
 };
 
 export type MeterState = Partial<Record<MeterKey, number>>;

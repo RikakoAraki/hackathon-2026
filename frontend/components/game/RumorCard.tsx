@@ -9,8 +9,21 @@ export default function RumorCard({ card }: Props) {
     <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-lg">
       <div className="mb-4 flex items-start gap-3">
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-100 text-lg font-bold text-sky-700">
-          {card.author.slice(0, 1)}
+          {(card.author ?? "?").slice(0, 1)}
         </div>
+
+        <div>
+          <p className="font-semibold">
+            {card.author ?? "匿名ユーザー"}
+          </p>
+          <p className="text-sm text-gray-500">
+            @{card.handle ?? "unknown"}
+          </p>
+        </div>
+
+        <p className="mt-2">
+          {card.body ?? card.description ?? ""}
+        </p>
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
