@@ -63,6 +63,12 @@ export type GameCard = {
   shift?: string;
   tags?: string[];
   contact?: string;
+
+  working_hours?: string;
+  requirements?: string;
+  benefits?: string;
+  how_to_apply?: string;
+  company_message?: string;
 };
 
 export type GameMode = {

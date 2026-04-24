@@ -30,13 +30,20 @@ def get_mode_meta(mode_type: str) -> dict:
         }
     elif mode_type == "yami_baito":
         return {
-            "title_hint": "闇バイト危険度チェック",
-            "description_hint": "怪しい求人を見極めて安全な判断を学ぶ教育ゲーム",
+            "title_hint": "闇バイト見極めシミュレーター",
+            "description_hint": "求人票を読んで応募の判断を学ぶ教育ゲーム",
             "apply_label": "応募する",
             "player_role": "あなたは応募を検討中の学生です",
             "unit_label": "求人",
             "header_label": "JOB SAFETY CHECK",
-            "theme_detail": "高収入すぎる求人、身分証要求、SNS連絡限定、口座貸与依頼などを題材にする",
+            "theme_detail": """
+実在しそうな求人票を生成する。以下を守ること:
+- 明らかに怪しいものから一見普通に見えるものまで混在させる
+- 危険な求人は「高収入すぎる」「仕事内容が曖昧」「SNS・DMのみ連絡」「身分証を個人に送る」「口座貸与」などのフラグを自然な文体で含める
+- 安全な求人は条件・連絡先・会社名が明確で現実的な内容にする
+- 求人票の各フィールドに具体的な情報を入れる（曖昧な「詳細は面接で」は危険フラグとして使ってよい）
+- 企業からのメッセージは勧誘感のある文体や、過度に友好的な文体にしてよい
+""",
         }
     else:
         raise HTTPException(status_code=400, detail="Invalid mode_type")
@@ -117,8 +124,15 @@ def build_user_prompt(req: GenerateGameRequest) -> str:
         "cards": [
             {{
             "id": "card_1",
-            "title": "...",
-            "description": "...",
+            "title": "求人タイトル",
+            "wage": "時給・日給・月給など具体的な金額",
+            "description": "仕事内容の詳細（2〜3文）",
+            "location": "勤務地（駅名・エリアなど）",
+            "working_hours": "勤務時間帯とシフト形態",
+            "requirements": "応募資格・条件",
+            "benefits": "待遇・福利厚生",
+            "how_to_apply": "応募方法（連絡先・方法）",
+            "company_message": "企業・募集主からのメッセージ（1〜2文）",
             "effects": {{
                 "apply": {{ "values": {{ "risk": 10, "safety": -5, "awareness": -5 }} }},
                 "ignore": {{ "values": {{ "risk": -5, "awareness": 5 }} }},

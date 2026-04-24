@@ -25,7 +25,14 @@ class CardEffect(BaseModel):
 class Card(BaseModel):
     id: str
     title: str
+    wage: str
     description: str
+    location: str
+    working_hours: str
+    requirements: str
+    benefits: str
+    how_to_apply: str
+    company_message: str
     effects: Dict[ActionKey, CardEffect] = Field(default_factory=dict)
 
 
