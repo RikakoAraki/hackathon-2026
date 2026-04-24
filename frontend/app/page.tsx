@@ -1,47 +1,48 @@
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
+import HeroHeader from "@/components/home/HeroHeader";
+import ModeCard from "@/components/home/ModeCard";
+import TeacherAdvice from "@/components/home/TeacherAdvice";
+import HowToPlayModal from "@/components/home/HowToPlayModal";
 
 export default function Home() {
+  const [isHowToOpen, setIsHowToOpen] = useState(false);
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
-      <div className="w-full max-w-3xl rounded-[32px] bg-white p-8 shadow-xl">
-        <p className="mb-2 text-sm font-semibold tracking-wide text-sky-700">
-          HACKATHON PROTOTYPE
-        </p>
-        <h1 className="mb-4 text-3xl font-bold text-slate-900">
-          情報判断シミュレーション
-        </h1>
-        <p className="mb-8 leading-7 text-slate-700">
-          誤情報対応や危険求人の見極めを、体験型ゲームとして学べるプロトタイプです。
-        </p>
+    <main className="flex min-h-screen items-center justify-center bg-[#fbf7ef] px-4 py-6">
+      <div className="w-full">
+        <div className="mx-auto w-full max-w-[930px] rounded-[30px] border border-[#f6eee2] bg-white px-9 py-5 shadow-[0_8px_24px_rgba(196,149,77,0.07)]">
+          <HeroHeader onOpenHowTo={() => setIsHowToOpen(true)} />
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <Link
-            href="/rumor"
-            className="rounded-[28px] border border-slate-200 bg-sky-50 p-6 transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <p className="mb-2 text-sm font-semibold text-sky-700">MODE 01</p>
-            <h2 className="mb-2 text-xl font-bold text-slate-900">
-              デマ拡散ストッパー
-            </h2>
-            <p className="text-sm leading-6 text-slate-600">
-              SNSの投稿を処理し、信頼・自由・流通のバランスを守るモード
-            </p>
-          </Link>
+          <div className="grid gap-4 md:grid-cols-2">
+            <ModeCard
+              modeLabel="MODE 01"
+              title="デマ拡散ストッパー"
+              description="SNSで流れてくる「それっぽい投稿」を見分け、広げる・やめる・通報する判断を練習します。"
+              href="/rumor"
+              theme="blue"
+            />
 
-          <Link
-            href="/yami-baito"
-            className="rounded-[28px] border border-slate-200 bg-amber-50 p-6 transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <p className="mb-2 text-sm font-semibold text-amber-700">MODE 02</p>
-            <h2 className="mb-2 text-xl font-bold text-slate-900">
-              闇バイト見極めシミュレーター
-            </h2>
-            <p className="text-sm leading-6 text-slate-600">
-              高収入求人や怪しい勧誘を見て、安全か危険かを判断するモード
-            </p>
-          </Link>
+            <ModeCard
+              modeLabel="MODE 02"
+              title="闇バイトみきわめシミュレーター"
+              description="求人票の内容を読み、応募するか無視するか、必要なら通報するかを選ぶ練習をします。"
+              href="/yami-baito"
+              theme="orange"
+            />
+          </div>
+        </div>
+
+        <div className="mx-auto mt-4 w-full max-w-[900px] px-2">
+          <TeacherAdvice />
         </div>
       </div>
+
+      <HowToPlayModal
+        open={isHowToOpen}
+        onClose={() => setIsHowToOpen(false)}
+      />
     </main>
   );
 }
