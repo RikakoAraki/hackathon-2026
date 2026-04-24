@@ -12,12 +12,21 @@ def get_mode_meta(mode_type: str) -> dict:
     if mode_type == "rumor":
         return {
             "title_hint": "デマ拡散防止ゲーム",
-            "description_hint": "SNS上の怪しい投稿や誤情報への対応を学ぶ教育ゲーム",
+            "description_hint": "SNS上の誤情報への対応を学ぶ教育ゲーム",
             "apply_label": "拡散する",
             "player_role": "あなたはSNS運営チームです",
             "unit_label": "投稿",
             "header_label": "TIMELINE MODERATION",
-            "theme_detail": "出典不明の投稿、煽り文句、誤誘導リンク、フェイクニュースなどを題材にする",
+            "theme_detail": """
+実際に起きうるSNS投稿を題材にする。以下の点を必ず守ること:
+- 一見もっともらしく、すぐには嘘と気づきにくい内容にする
+- 「明らかに怪しい」「絶対に嘘」と分かる極端な表現は使わない
+- 実在しそうな具体的なアカウント名・状況・数字を含める
+- 例: 地震・台風・感染症・食品・交通などの生活に関わるテーマ
+- 例: 「○○駅で今朝から水道が止まっている」「△△市のスーパーで食中毒が出た」など
+- 正しい情報・誤った情報・不確かな情報が混在するようにする
+- 投稿者は普通の市民・専門家・公式アカウントなど多様にする
+""",
         }
     elif mode_type == "yami_baito":
         return {
@@ -44,7 +53,10 @@ SYSTEM_PROMPT = """
 - actions の label は指定されたラベルを使う
 - meters は safety, risk, awareness の3つを使う
 - 各 meter は key, label, min, max, initial を持つ
-- cards は現実的で教育的な内容にする
+- cards の description はSNS投稿そのものの文章だけを書く
+- 「〜と、匿名の投稿」「根拠リンクがない」「時刻と場所は具体的だが」のような解説・注釈・分析は絶対に入れない
+- 「※これはデマです」「明らかに怪しい」などのコメントも絶対に入れない
+- description はあくまで投稿者が書いたSNSのテキストそのものとして書く
 - effects は各 action ごとに values を持つ
 - values の値は整数
 - 内容は高校生・大学生にもわかりやすくする

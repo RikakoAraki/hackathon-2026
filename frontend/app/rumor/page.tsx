@@ -20,35 +20,36 @@ export default function RumorPage() {
   );
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchMode = async () => {
-      try {
-        const res = await fetch("http://127.0.0.1:8000/api/generator/game-mode", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            mode_type: "rumor",
-            difficulty: "normal",
-            card_count: 5,
-          }),
-        });
+  const fetchMode = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/generator/game-mode", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mode_type: "rumor",
+          difficulty: "normal",
+          card_count: 5,
+        }),
+      });
 
-        if (!res.ok) {
-          throw new Error("failed to fetch rumor mode");
-        }
-
-        const data: GameMode = await res.json();
-        setMode(data);
-        setMeters(createInitialMeters(data));
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+      if (!res.ok) {
+        throw new Error("failed to fetch rumor mode");
       }
-    };
 
+      const data: GameMode = await res.json();
+      setMode(data);
+      setMeters(createInitialMeters(data));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchMode();
   }, []);
 
@@ -72,10 +73,9 @@ export default function RumorPage() {
   };
 
   const handleRestart = () => {
-    if (!mode) return;
     setCurrentIndex(0);
-    setMeters(createInitialMeters(mode));
     setHistory([]);
+    fetchMode();
   };
 
   if (loading || !mode) {
