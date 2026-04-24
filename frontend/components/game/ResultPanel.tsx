@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MeterState } from "@/lib/types";
 
 type Props = {
@@ -27,12 +28,20 @@ export default function ResultPanel({ meters, comment, onRestart }: Props) {
 
       <p className="mb-6 leading-7 text-slate-700">{comment}</p>
 
-      <button
-        onClick={onRestart}
-        className="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:opacity-90"
-      >
-        もう一度プレイ
-      </button>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <button
+          onClick={onRestart}
+          className="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:opacity-90"
+        >
+          もう一度プレイ
+        </button>
+        <Link
+          href="/"
+          className="inline-flex justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-900 transition hover:bg-slate-100"
+        >
+          トップに戻る
+        </Link>
+      </div>
     </div>
   );
 }
