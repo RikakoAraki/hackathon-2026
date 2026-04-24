@@ -15,7 +15,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-[930px] rounded-[30px] border border-[#f6eee2] bg-white px-9 py-5 shadow-[0_8px_24px_rgba(196,149,77,0.07)]">
           <HeroHeader onOpenHowTo={() => setIsHowToOpen(true)} />
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="mt-3 grid gap-5 md:grid-cols-2">
             <ModeCard
               modeLabel="MODE 01"
               title="デマ拡散ストッパー"
@@ -34,7 +34,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mx-auto mt-4 w-full max-w-[900px] px-2">
+        <div className="mx-auto mt-5 w-full max-w-[940px] px-2">
           <TeacherAdvice />
         </div>
       </div>
