@@ -85,3 +85,20 @@ export type GameMode = {
 };
 
 export type MeterState = Partial<Record<MeterKey, number>>;
+
+export type RumorCard = {
+  id: string;
+  body: string;
+  author: string;
+  is_verified: boolean;
+  correct_action: ActionKey;
+  partial_actions?: ActionKey[];
+  reason: string;
+};
+
+export type RumorGameMode = {
+  title: string;
+  description: string;
+  actions: ActionDefinition[];
+  cards: RumorCard[];
+};
