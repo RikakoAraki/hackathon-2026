@@ -2,6 +2,16 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { Send, ShieldX, Flag } from "lucide-react";
+import ResultPanel from "@/components/game/ResultPanel";
+import LoadingCard from "@/components/common/LoadingCard";
+import { Search } from "lucide-react";
+
+import {
+  applyEffect,
+  createInitialMeters,
+  getEndingComment,
+} from "@/lib/gameEngine";
+
 import { ActionKey, GameMode } from "@/lib/types";
 
 type HistoryEntry = { cardId: string; action: ActionKey };
@@ -35,14 +45,15 @@ export default function YamiBaitoPage() {
   };
 
   useEffect(() => { fetchMode(); }, []);
-
+  
   if (loading || !mode) {
     return (
-      <main className="min-h-screen bg-orange-50">
-        <div className="mx-auto max-w-3xl px-4 py-8">
-          <div className="rounded-2xl bg-white p-6 shadow">読み込み中...</div>
-        </div>
-      </main>
+      <LoadingCard
+        title="読み込み中…"
+        description="求人データを検索しています"
+        theme="orange"
+        icon={<Search className="h-9 w-9 text-orange-500" strokeWidth={2.2} />}
+      />
     );
   }
 

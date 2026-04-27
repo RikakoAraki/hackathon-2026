@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import RumorCard from "@/components/game/RumorCard";
+import LoadingCard from "@/components/common/LoadingCard";
+import { Search } from "lucide-react";
 import { ActionKey, RumorCard as RumorCardType, RumorGameMode } from "@/lib/types";
 
 type HistoryEntry = { cardId: string; action: ActionKey };
@@ -36,11 +38,12 @@ export default function RumorPage() {
 
   if (loading || !mode) {
     return (
-      <main className="min-h-screen bg-slate-100">
-        <div className="mx-auto max-w-3xl px-4 py-8">
-          <div className="rounded-2xl bg-white p-6 shadow">読み込み中...</div>
-        </div>
-      </main>
+      <LoadingCard
+        title="読み込み中…"
+        description="投稿データを読み込んでいます"
+        theme="blue"
+        icon={<Search className="h-9 w-9 text-blue-500" strokeWidth={2.2} />}
+      />
     );
   }
 
