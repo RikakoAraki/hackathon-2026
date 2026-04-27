@@ -25,6 +25,8 @@ YAMI_BAITO_MODE = GameMode(
             "benefits": "即日現金払い、交通費別途支給",
             "how_to_apply": "InstagramのDMにて「応募」とメッセージ",
             "company_message": "未経験大歓迎！まずは気軽にDMください😊",
+            "correct_action": "report",
+            "reason": "SNS DMのみの連絡・身分証コピー要求・即日現金払いは闇バイトの典型的な手口です。通報が適切です。",
             "effects": {
                 "apply":  {"values": {"risk": 30, "safety": -25, "awareness": -10}},
                 "ignore": {"values": {"risk": -5, "awareness":  5}},
@@ -42,6 +44,8 @@ YAMI_BAITO_MODE = GameMode(
             "benefits": "交通費全額支給、まかない付き、社会保険完備",
             "how_to_apply": "求人サイト経由またはお電話にて（03-XXXX-XXXX）",
             "company_message": "アットホームな職場です。見学も歓迎しています。",
+            "correct_action": "apply",
+            "reason": "会社名・電話番号・勤務地・時給がすべて明確で、求人サイト経由の応募です。安全な求人です。",
             "effects": {
                 "apply":  {"values": {"risk": -5, "safety": 10, "awareness":  5}},
                 "ignore": {"values": {"risk":  0, "awareness":  0}},
@@ -59,6 +63,8 @@ YAMI_BAITO_MODE = GameMode(
             "benefits": "高収入・インセンティブあり",
             "how_to_apply": "LINEで「応募」とメッセージ（ID: @xxxxx）",
             "company_message": "一緒に夢を叶えましょう！まずは話だけでも聞きにきてください。",
+            "correct_action": "ignore",
+            "reason": "仕事内容が「面談で説明」と曖昧で、LINEのみの連絡・月収50万以上は非現実的です。無視または通報が適切です。",
             "effects": {
                 "apply":  {"values": {"risk": 20, "safety": -18, "awareness": -10}},
                 "ignore": {"values": {"risk": -5, "awareness":  5}},

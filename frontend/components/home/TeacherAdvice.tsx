@@ -11,7 +11,7 @@ export default function TeacherAdvice() {
             alt="先生アイコン"
             width={54}
             height={54}
-            className="absolute -top-1 left-1/2 h-auto w-[54px] -translate-x-1/2 object-contain"
+            className="absolute -top left-1/2 h-auto w-[54px] -translate-x-1/2 object-contain"
         />
     </div>
 
