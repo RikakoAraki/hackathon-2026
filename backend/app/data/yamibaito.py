@@ -2,7 +2,7 @@ from app.schemas.yamibaito import GameMode
 
 YAMI_BAITO_MODE = GameMode(
     title="闇バイト見極めシミュレーター",
-    description="高収入バイトの募集やDMを見て、応募・無視・通報を判断してください。",
+    description="高収入バイトの募集やDMを見て、応募・無視を判断してください。",
     meters=[
         {"key": "safety", "label": "安全度", "min": 0, "max": 100, "initial": 50},
         {"key": "risk",   "label": "危険度", "min": 0, "max": 100, "initial": 50},
@@ -11,7 +11,6 @@ YAMI_BAITO_MODE = GameMode(
     actions=[
         {"key": "apply",  "label": "応募する"},
         {"key": "ignore", "label": "無視する"},
-        {"key": "report", "label": "通報する"},
     ],
     cards=[
         {
@@ -25,12 +24,11 @@ YAMI_BAITO_MODE = GameMode(
             "benefits": "即日現金払い、交通費別途支給",
             "how_to_apply": "InstagramのDMにて「応募」とメッセージ",
             "company_message": "未経験大歓迎！まずは気軽にDMください😊",
-            "correct_action": "report",
-            "reason": "SNS DMのみの連絡・身分証コピー要求・即日現金払いは闇バイトの典型的な手口です。通報が適切です。",
+            "correct_action": "ignore",
+            "reason": "SNS DMのみの連絡・身分証コピー要求・即日現金払いは闇バイトの典型的な手口です。無視が適切です。",
             "effects": {
                 "apply":  {"values": {"risk": 30, "safety": -25, "awareness": -10}},
                 "ignore": {"values": {"risk": -5, "awareness":  5}},
-                "report": {"values": {"risk": -15, "safety": 10, "awareness": 10}},
             },
         },
         {
@@ -49,7 +47,6 @@ YAMI_BAITO_MODE = GameMode(
             "effects": {
                 "apply":  {"values": {"risk": -5, "safety": 10, "awareness":  5}},
                 "ignore": {"values": {"risk":  0, "awareness":  0}},
-                "report": {"values": {"risk":  0, "safety": -5, "awareness": -5}},
             },
         },
         {
@@ -64,11 +61,10 @@ YAMI_BAITO_MODE = GameMode(
             "how_to_apply": "LINEで「応募」とメッセージ（ID: @xxxxx）",
             "company_message": "一緒に夢を叶えましょう！まずは話だけでも聞きにきてください。",
             "correct_action": "ignore",
-            "reason": "仕事内容が「面談で説明」と曖昧で、LINEのみの連絡・月収50万以上は非現実的です。無視または通報が適切です。",
+            "reason": "仕事内容が「面談で説明」と曖昧で、LINEのみの連絡・月収50万以上は非現実的です。無視が適切です。",
             "effects": {
                 "apply":  {"values": {"risk": 20, "safety": -18, "awareness": -10}},
                 "ignore": {"values": {"risk": -5, "awareness":  5}},
-                "report": {"values": {"risk": -10, "safety":  8, "awareness": 10}},
             },
         },
     ],
