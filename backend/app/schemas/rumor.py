@@ -1,7 +1,7 @@
 from typing import List, Literal
 from pydantic import BaseModel
 
-ActionKey = Literal["share", "factcheck", "hide"]
+ActionKey = Literal["share", "hide"]
 
 class ActionDefinition(BaseModel):
     key: ActionKey

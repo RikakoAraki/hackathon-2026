@@ -2,7 +2,7 @@ from typing import Dict, List, Literal, Optional
 from pydantic import BaseModel, Field
 
 
-ActionKey = Literal["apply", "ignore", "report"]
+ActionKey = Literal["apply", "ignore"]
 
 
 class MeterDefinition(BaseModel):

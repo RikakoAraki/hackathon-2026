@@ -17,9 +17,9 @@ SNS上の投稿を題材にした情報判断ゲームのデータをJSONで生�
 - 必ずJSONのみを返す。説明文・コードブロック不要
 - cards の body はSNS投稿本文そのものだけを書く（解説・注釈を入れない）
 - 「〜と匿名の投稿」「根拠リンクがない」などの分析コメントは絶対に書かない
-- correct_action は必ず "share"/"factcheck"/"hide" のいずれか1つ
-- partial_actions は正解ではないが「まあ間違いではない」行動のリスト（0個でもよい）。例: 正解がhideでもfactcheckは部分的に妥当など
-- reason は「なぜそのアクションが正解か」と「部分点アクションがある場合その理由」を1〜2文で書く
+- correct_action は必ず "share"/"hide" のいずれか1つ
+- partial_actions は常に空リスト []
+- reason は「なぜそのアクションが正解か」を1〜2文で書く
 - is_verified は公式・行政・報道機関なら true、一般ユーザーなら false
 - 正しい投稿・誤った投稿・不確かな投稿を混在させる
 - JSONの構造を厳密に守る
@@ -55,9 +55,8 @@ def build_rumor_prompt(req: GenerateGameRequest) -> str:
   "title": "デマ拡散ストッパー",
   "description": "SNSの投稿を判断し、正しく対応できるかを試すゲームです。",
   "actions": [
-    {{ "key": "share",     "label": "拡散" }},
-    {{ "key": "factcheck", "label": "裏取り" }},
-    {{ "key": "hide",      "label": "非表示" }}
+    {{ "key": "share", "label": "拡散" }},
+    {{ "key": "hide",  "label": "無視" }}
   ],
   "cards": [
     {{
@@ -66,9 +65,9 @@ def build_rumor_prompt(req: GenerateGameRequest) -> str:
       "author": "投稿者名（ニックネームや機関名など）",
       "handle": "author名に対応した英数字のSNSハンドル（@なし・例: city_bousai, health_watch, taro_1128）",
       "is_verified": false,
-      "correct_action": "factcheck",
-      "partial_actions": ["hide"],
-      "reason": "出典が不明で数値の根拠がないため裏取りが最適。非表示も誤情報拡散防止として部分的に妥当。"
+      "correct_action": "hide",
+      "partial_actions": [],
+      "reason": "出典が不明で誤情報の可能性があるため、拡散せず無視するのが正解です。"
     }}
   ]
 }}
@@ -94,8 +93,7 @@ def build_yami_baito_prompt(req: GenerateGameRequest) -> str:
   ],
   "actions": [
     {{ "key": "apply",  "label": "応募する" }},
-    {{ "key": "ignore", "label": "無視する" }},
-    {{ "key": "report", "label": "通報する" }}
+    {{ "key": "ignore", "label": "無視する" }}
   ],
   "cards": [
     {{
@@ -109,9 +107,9 @@ def build_yami_baito_prompt(req: GenerateGameRequest) -> str:
       "benefits": "待遇",
       "how_to_apply": "応募方法",
       "company_message": "企業からのメッセージ（1〜2文）",
-      "correct_action": "apply または ignore または report のいずれか",
-      "partial_actions": ["ignore または report など、正解ではないが部分的に妥当な行動（0個でもよい）"],
-      "reason": "なぜそのアクションが正解か、partial_actionsがある場合その理由も（1〜2文）",
+      "correct_action": "apply または ignore のいずれか",
+      "partial_actions": [],
+      "reason": "なぜそのアクションが正解か（1〜2文で根拠を明示）",
       "effects": {{
         "apply":  {{ "values": {{ "risk": 10, "safety": -5, "awareness": -5 }} }},
         "ignore": {{ "values": {{ "risk": -5, "awareness": 5 }} }},
