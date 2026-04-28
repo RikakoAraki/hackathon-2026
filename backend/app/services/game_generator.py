@@ -31,10 +31,10 @@ YAMI_BAITO_SYSTEM_PROMPT = """
 出力ルール:
 - 必ずJSONのみを返す
 - 説明文やコードブロックは不要
-- actions の key は "apply", "ignore", "report" のみ
+- actions の key は "apply" と "ignore" の2つのみ（reportは使わない）
 - meters は safety, risk, awareness の3つを使う
 - 各 meter は key, label, min, max, initial を持つ
-- effects は各 action ごとに values を持つ
+- effects は "apply" と "ignore" の2つのみ（reportは含めない）
 - values の値は整数
 - 内容は高校生・大学生にもわかりやすくする
 - JSONの構造は厳密に守る
@@ -109,8 +109,7 @@ def build_yami_baito_prompt(req: GenerateGameRequest) -> str:
       "reason": "なぜそのアクションが正解か（1〜2文で根拠を明示）",
       "effects": {{
         "apply":  {{ "values": {{ "risk": 10, "safety": -5, "awareness": -5 }} }},
-        "ignore": {{ "values": {{ "risk": -5, "awareness": 5 }} }},
-        "report": {{ "values": {{ "risk": -10, "safety": 10, "awareness": 10 }} }}
+        "ignore": {{ "values": {{ "risk": -5, "awareness": 5 }} }}
       }}
     }}
   ]
