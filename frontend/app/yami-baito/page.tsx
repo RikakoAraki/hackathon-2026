@@ -7,9 +7,9 @@ import {
   Flag,
   Briefcase,
   MessageCircleHeart,
-  ShieldCheck,
-  TriangleAlert,
-  Eye,
+  CircleCheck,
+  BookOpenCheck,
+  Goal,
   Search,
   Lightbulb,
 } from "lucide-react";
@@ -354,9 +354,9 @@ function StatusCard({
   };
 
   const iconMap = {
-    進行度: <Eye className="h-5 w-5 text-blue-500" />,
-    正解数: <ShieldCheck className="h-5 w-5 text-emerald-500" />,
-    獲得点: <TriangleAlert className="h-5 w-5 text-red-500" />,
+    進行度: <Goal className="h-5 w-5 text-blue-500" />,
+    正解数: <CircleCheck className="h-5 w-5 text-emerald-500" />,
+    獲得点: <BookOpenCheck className="h-5 w-5 text-red-500" />,
   };
 
   const progressWidth =
