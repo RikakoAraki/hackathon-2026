@@ -94,9 +94,7 @@ export default function YamiBaitoPage() {
     { title: "スコア", value: score, maxLabel: "/ 100", color: "red" },
   ];
 
-  const tags = currentCard?.tags?.length
-    ? currentCard.tags
-    : ["高収入", "即日払い", "未経験OK", "履歴書不要"];
+  const tags: string[] = currentCard?.tags ?? [];
 
   const wage = currentCard?.wage ?? "";
   const location = currentCard?.location ?? "都内各所（詳細は連絡時にお伝えします）";

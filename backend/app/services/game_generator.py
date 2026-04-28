@@ -97,6 +97,7 @@ def build_yami_baito_prompt(req: GenerateGameRequest) -> str:
     {{
       "id": "card_1",
       "title": "求人タイトル",
+      "tags": ["求人の特徴を表す短いタグを2〜4個。例: 高収入・即日払い・未経験OK・身分証必要・SNSのみ連絡・社会保険完備 など内容に合わせて選ぶ"],
       "wage": "時給・日給・月給など具体的な金額",
       "description": "仕事内容の詳細（2〜3文）",
       "location": "勤務地",
