@@ -13,7 +13,7 @@ import {
   Search,
   Lightbulb,
 } from "lucide-react";
-
+import Link from "next/link";
 import LoadingCard from "@/components/common/LoadingCard";
 import { ActionKey, GameMode } from "@/lib/types";
 
@@ -76,16 +76,10 @@ export default function YamiBaitoPage() {
     setCurrentIndex((prev) => prev + 1);
   };
 
-  const getPoints = (action: ActionKey | undefined, i: number) => {
-    const card = mode.cards[i] as any;
-    if (!action) return 0;
-    if (action === card.correct_action) return 20;
-    if (card.partial_actions?.includes(action)) return 10;
-    return 0;
-  };
-
-  const totalPoints = history.reduce((sum, h, i) => sum + getPoints(h.action, i), 0);
-  const score = Math.round((totalPoints / (mode.cards.length * 20)) * 100);
+  const correctCount = history.filter(
+    (h, i) => h.action === (mode.cards[i] as any).correct_action
+  ).length;
+  const score = Math.round((correctCount / mode.cards.length) * 100);
 
   const correctCount = history.filter((h, i) => getPoints(h.action, i) === 20).length;
   const answeredCount = history.length;
@@ -99,7 +93,7 @@ export default function YamiBaitoPage() {
   }[] = [
     { title: "進行度", value: progressValue, maxLabel: "/ 100", color: "blue" },
     { title: "正解数", value: correctCount, maxLabel: `/ ${mode.cards.length}`, color: "green" },
-    { title: "獲得点", value: totalPoints, maxLabel: ` / ${mode.cards.length * 20}`, color: "red" },
+    { title: "スコア", value: score, maxLabel: "/ 100", color: "red" },
   ];
 
   const tags = currentCard?.tags?.length
@@ -249,45 +243,24 @@ export default function YamiBaitoPage() {
               <span className="text-2xl font-normal text-slate-500"> / 100</span>
             </p>
             <p className="mb-6 text-slate-500">
-              {totalPoints} / {mode.cards.length * 20} 点
+              {correctCount} / {mode.cards.length} 問正解
             </p>
 
             <div className="mb-6 space-y-3">
               {mode.cards.map((card: any, i) => {
                 const taken = history[i]?.action;
                 const correct = card.correct_action as ActionKey;
-                const pts = getPoints(taken, i);
-                const isCorrect = pts === 20;
-                const isPartial = pts === 10;
-
+                const isCorrect = taken === correct;
                 const takenLabel =
                   mode.actions.find((a) => a.key === taken)?.label ?? taken;
                 const correctLabel =
                   mode.actions.find((a) => a.key === correct)?.label ?? correct;
 
-                const bgClass = isCorrect
-                  ? "bg-green-50 border border-green-200"
-                  : isPartial
-                    ? "bg-yellow-50 border border-yellow-200"
-                    : "bg-red-50 border border-red-200";
-
                 return (
-                  <div key={card.id} className={`rounded-2xl p-4 text-sm ${bgClass}`}>
+                  <div key={card.id} className={`rounded-2xl p-4 text-sm ${isCorrect ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"}`}>
                     <div className="mb-2 flex items-center gap-2">
-                      <span
-                        className={`font-bold ${
-                          isCorrect
-                            ? "text-green-600"
-                            : isPartial
-                              ? "text-yellow-600"
-                              : "text-red-600"
-                        }`}
-                      >
-                        {isCorrect
-                          ? "✓ 正解 +20"
-                          : isPartial
-                            ? "△ 惜しい +10"
-                            : "✗ 不正解 +0"}
+                      <span className={`font-bold ${isCorrect ? "text-green-600" : "text-red-600"}`}>
+                        {isCorrect ? "✓ 正解" : "✗ 不正解"}
                       </span>
                       <span className="text-slate-500">あなた: {takenLabel}</span>
                       {!isCorrect && (
@@ -304,12 +277,20 @@ export default function YamiBaitoPage() {
               })}
             </div>
 
-            <button
-              onClick={fetchMode}
-              className="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:opacity-90"
-            >
-              もう一度プレイ
-            </button>
+            <div className="flex gap-3">
+              <button
+                onClick={fetchMode}
+                className="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:opacity-90"
+              >
+                もう一度プレイ
+              </button>
+              <Link
+                href="/"
+                className="rounded-2xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-100"
+              >
+                トップに戻る
+              </Link>
+            </div>
           </div>
         )}
         

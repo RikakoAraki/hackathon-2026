@@ -2,7 +2,7 @@ from typing import Dict, List, Literal, Optional
 from pydantic import BaseModel, Field
 
 
-ActionKey = Literal["apply", "ignore", "report"]
+ActionKey = Literal["apply", "ignore"]
 
 
 class MeterDefinition(BaseModel):
@@ -34,7 +34,6 @@ class Card(BaseModel):
     how_to_apply: str
     company_message: str
     correct_action: ActionKey
-    partial_actions: List[ActionKey] = []
     reason: str
     effects: Dict[ActionKey, CardEffect] = Field(default_factory=dict)
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import RumorCard from "@/components/game/RumorCard";
 import LoadingCard from "@/components/common/LoadingCard";
 import { Search } from "lucide-react";
@@ -56,17 +57,10 @@ export default function RumorPage() {
     setCurrentIndex((prev) => prev + 1);
   };
 
-  const getPoints = (action: ActionKey, i: number) => {
-    const card = mode.cards[i];
-    if (action === card.correct_action) return 20;
-    if (card.partial_actions?.includes(action)) return 10;
-    return 0;
-  };
-
-  const totalPoints = finished
-    ? history.reduce((sum, h, i) => sum + getPoints(h.action, i), 0)
+  const correctCount = finished
+    ? history.filter((h, i) => h.action === mode.cards[i].correct_action).length
     : 0;
-  const score = finished ? Math.round((totalPoints / (mode.cards.length * 20)) * 100) : 0;
+  const score = finished ? Math.round((correctCount / mode.cards.length) * 100) : 0;
 
   return (
     <main className="min-h-screen bg-slate-100">
@@ -104,25 +98,20 @@ export default function RumorPage() {
           <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-lg">
             <p className="mb-2 text-sm font-semibold tracking-wide text-sky-700">RESULT</p>
             <p className="mb-1 text-5xl font-bold text-slate-900">{score}<span className="text-2xl font-normal text-slate-500"> / 100</span></p>
-            <p className="mb-6 text-slate-500">{totalPoints} / {mode.cards.length * 20} 点</p>
+            <p className="mb-6 text-slate-500">{correctCount} / {mode.cards.length} 問正解</p>
 
             <div className="space-y-3 mb-6">
               {mode.cards.map((card, i) => {
                 const taken = history[i]?.action;
                 const correct = card.correct_action;
-                const pts = getPoints(taken, i);
-                const isCorrect = pts === 20;
-                const isPartial = pts === 10;
+                const isCorrect = taken === correct;
                 const takenLabel = mode.actions.find((a) => a.key === taken)?.label ?? taken;
                 const correctLabel = mode.actions.find((a) => a.key === correct)?.label ?? correct;
-                const bgClass = isCorrect ? "bg-green-50 border border-green-200"
-                  : isPartial ? "bg-yellow-50 border border-yellow-200"
-                  : "bg-red-50 border border-red-200";
                 return (
-                  <div key={card.id} className={`rounded-2xl p-4 text-sm ${bgClass}`}>
+                  <div key={card.id} className={`rounded-2xl p-4 text-sm ${isCorrect ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"}`}>
                     <div className="flex items-center gap-2 mb-2">
-                      <span className={`font-bold ${isCorrect ? "text-green-600" : isPartial ? "text-yellow-600" : "text-red-600"}`}>
-                        {isCorrect ? "✓ 正解 +20" : isPartial ? "△ 惜しい +10" : "✗ 不正解 +0"}
+                      <span className={`font-bold ${isCorrect ? "text-green-600" : "text-red-600"}`}>
+                        {isCorrect ? "✓ 正解" : "✗ 不正解"}
                       </span>
                       <span className="text-slate-500">あなた: {takenLabel}</span>
                       {!isCorrect && <span className="text-slate-500">→ 正解: {correctLabel}</span>}
@@ -136,12 +125,20 @@ export default function RumorPage() {
               })}
             </div>
 
-            <button
-              onClick={fetchMode}
-              className="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:opacity-90"
-            >
-              もう一度プレイ
-            </button>
+            <div className="flex gap-3">
+              <button
+                onClick={fetchMode}
+                className="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:opacity-90"
+              >
+                もう一度プレイ
+              </button>
+              <Link
+                href="/"
+                className="rounded-2xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-100"
+              >
+                トップに戻る
+              </Link>
+            </div>
           </div>
         )}
       </div>

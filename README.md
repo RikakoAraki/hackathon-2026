@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SNSリテラシー体験ゲーム
 
-## Getting Started
+SNS上のデマ拡散・闇バイトへの誘惑という身近なリスクを、ゲーム感覚で学べる教育コンテンツです。
 
-First, run the development server:
+## ゲームモード
+
+### MODE 01 — デマ拡散ストッパー
+SNSに流れてくる「それっぽい投稿」を見て、**拡散する / 無視する** を判断します。  
+正解・不正解の根拠を読んで、情報を見極める力を身につけます。
+
+### MODE 02 — 闇バイトみきわめシミュレーター
+リアルな求人票を読んで、**応募する / 無視する** を判断します。  
+怪しい求人に共通するフラグを学びます。
+
+どちらのモードも問題はAI（GPT）がゲームごとに生成するため、毎回異なる内容で遊べます。
+
+---
+
+## 技術スタック
+
+| レイヤー | 技術 |
+|---|---|
+| フロントエンド | Next.js 16 / React 19 / TypeScript / Tailwind CSS |
+| バックエンド | FastAPI / Python 3.10 |
+| AI | OpenAI API (GPT) |
+
+---
+
+## セットアップ
+
+### 前提条件
+- Node.js 18以上
+- Python 3.10以上
+- OpenAI APIキー
+
+### バックエンド
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd backend
+pip install -r requirements.txt   # または environment.yml を使う場合: conda env create -f ../environment.yml
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`.env` ファイルを作成して APIキーを設定します:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+OPENAI_API_KEY=sk-...
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+起動:
 
-## Learn More
+```bash
+python3.10 -m uvicorn app.main:app --reload
+```
 
-To learn more about Next.js, take a look at the following resources:
+`http://localhost:8000` で起動します。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### フロントエンド
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## Deploy on Vercel
+`http://localhost:3000` で起動します。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 画面構成
+
+```
+/            トップページ（モード選択）
+/rumor       デマ拡散ストッパー
+/yami-baito  闇バイトみきわめシミュレーター
+```
+
+---
+
+## スコアリング
+
+各モードとも **2択**（正解 or 不正解）、問題数をもとに100点満点で換算します。
+
+| 判定 | 結果 |
+|---|---|
+| ✓ 正解 | カウント |
+| ✗ 不正解 | カウントなし |
+
+結果画面では各問題の正誤と解説を確認できます。

@@ -1,7 +1,8 @@
 from typing import List, Literal
+
 from pydantic import BaseModel
 
-ActionKey = Literal["share", "factcheck", "hide"]
+ActionKey = Literal["share", "hide"]
 
 class ActionDefinition(BaseModel):
     key: ActionKey
@@ -14,7 +15,6 @@ class RumorCard(BaseModel):
     handle: str
     is_verified: bool = False
     correct_action: ActionKey
-    partial_actions: List[ActionKey] = []
     reason: str
 
 class RumorGameMode(BaseModel):
