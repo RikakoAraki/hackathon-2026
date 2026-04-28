@@ -46,13 +46,9 @@ export default function HowToPlayModal({
           <div className="rounded-2xl bg-[#fff8ef] p-4">
             <p className="mb-1 font-bold text-[#9c4f18]">3. 結果を見る</p>
             <p className="leading-7">
-              あなたの判断によって、信頼度や安全度などの指標が変化します。
+              あなたの判断によって、最終的な点数が決まります。
             </p>
           </div>
-        </div>
-
-        <div className="mt-6 rounded-2xl border border-[#f3e8d9] bg-white p-4 text-sm leading-7 text-stone-600">
-          正解がひとつに決まらない場面もあります。状況を見ながら、よりよい判断を考えてみましょう。
         </div>
       </div>
     </div>
