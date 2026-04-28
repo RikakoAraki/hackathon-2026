@@ -19,7 +19,7 @@ import { ActionKey, GameMode } from "@/lib/types";
 
 type HistoryEntry = { cardId: string; action: ActionKey };
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
 
 export default function YamiBaitoPage() {
   const [mode, setMode] = useState<GameMode | null>(null);
