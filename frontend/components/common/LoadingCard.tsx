@@ -16,7 +16,7 @@ export default function LoadingCard({
   const isBlue = theme === "blue";
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#fbf7ef] px-4">
+    <div className={`flex min-h-screen items-center justify-center px-4 ${isBlue ? "bg-sky-100" : "bg-[#fbf7ef]"}`}>
       <div className="w-full max-w-[520px] rounded-[28px] border border-[#f3e8d9] bg-white px-8 py-8 text-center shadow-[0_10px_28px_rgba(196,149,77,0.08)]">
         <div
           className={`mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full ${
