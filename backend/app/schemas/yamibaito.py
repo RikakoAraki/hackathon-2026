@@ -34,7 +34,6 @@ class Card(BaseModel):
     how_to_apply: str
     company_message: str
     correct_action: ActionKey
-    partial_actions: List[ActionKey] = []
     reason: str
     effects: Dict[ActionKey, CardEffect] = Field(default_factory=dict)
 

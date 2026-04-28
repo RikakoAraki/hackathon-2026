@@ -92,7 +92,6 @@ export type RumorCard = {
   author: string;
   is_verified: boolean;
   correct_action: ActionKey;
-  partial_actions?: ActionKey[];
   reason: string;
 };
 

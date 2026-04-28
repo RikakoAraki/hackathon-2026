@@ -18,7 +18,6 @@ SNS上の投稿を題材にした情報判断ゲームのデータをJSONで生�
 - cards の body はSNS投稿本文そのものだけを書く（解説・注釈を入れない）
 - 「〜と匿名の投稿」「根拠リンクがない」などの分析コメントは絶対に書かない
 - correct_action は必ず "share"/"hide" のいずれか1つ
-- partial_actions は常に空リスト []
 - reason は「なぜそのアクションが正解か」を1〜2文で書く
 - is_verified は公式・行政・報道機関なら true、一般ユーザーなら false
 - 正しい投稿・誤った投稿・不確かな投稿を混在させる
@@ -66,7 +65,6 @@ def build_rumor_prompt(req: GenerateGameRequest) -> str:
       "handle": "author名に対応した英数字のSNSハンドル（@なし・例: city_bousai, health_watch, taro_1128）",
       "is_verified": false,
       "correct_action": "hide",
-      "partial_actions": [],
       "reason": "出典が不明で誤情報の可能性があるため、拡散せず無視するのが正解です。"
     }}
   ]
@@ -108,7 +106,6 @@ def build_yami_baito_prompt(req: GenerateGameRequest) -> str:
       "how_to_apply": "応募方法",
       "company_message": "企業からのメッセージ（1〜2文）",
       "correct_action": "apply または ignore のいずれか",
-      "partial_actions": [],
       "reason": "なぜそのアクションが正解か（1〜2文で根拠を明示）",
       "effects": {{
         "apply":  {{ "values": {{ "risk": 10, "safety": -5, "awareness": -5 }} }},
