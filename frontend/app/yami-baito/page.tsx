@@ -13,7 +13,7 @@ import {
   Search,
   Lightbulb,
 } from "lucide-react";
-
+import Link from "next/link";
 import LoadingCard from "@/components/common/LoadingCard";
 import { ActionKey, GameMode } from "@/lib/types";
 
@@ -304,12 +304,20 @@ export default function YamiBaitoPage() {
               })}
             </div>
 
-            <button
-              onClick={fetchMode}
-              className="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:opacity-90"
-            >
-              もう一度プレイ
-            </button>
+            <div className="flex gap-3">
+              <button
+                onClick={fetchMode}
+                className="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:opacity-90"
+              >
+                もう一度プレイ
+              </button>
+              <Link
+                href="/"
+                className="rounded-2xl border border-slate-300 px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-100"
+              >
+                トップに戻る
+              </Link>
+            </div>
           </div>
         )}
         
