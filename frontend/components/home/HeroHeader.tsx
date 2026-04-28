@@ -16,7 +16,7 @@ export default function HeroHeader({ onOpenHowTo }: HeroHeaderProps) {
 
           <div className="min-w-0">
             <p className="mt-4 mb-1 text-sm font-extrabold tracking-wide text-orange-500">
-              JOB SAFETY CHECK
+              Information Literacy Simulation
             </p>
 
             <h1 className="mt-4 text-[26px] font-extrabold leading-none tracking-[-0.03em] text-[#4b1f0f] sm:text-[40px]">
@@ -29,7 +29,7 @@ export default function HeroHeader({ onOpenHowTo }: HeroHeaderProps) {
       </div>
 
       <p className="mt-6 mb-2 max-w-[650px] text-[17px] leading-8 text-stone-700">
-        誤情報対応や危険求人の見極めを、体験型ゲームとして学べるプロトタイプです。
+        誤情報への対応や危険な求人のみきわめ方を、体験型ゲームで学べる！
         </p>
 
       <div className="pointer-events-none absolute right-5 top-10 hidden md:block">
