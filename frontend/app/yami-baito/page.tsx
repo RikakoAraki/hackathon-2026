@@ -19,7 +19,7 @@ import { ActionKey, GameMode } from "@/lib/types";
 
 type HistoryEntry = { cardId: string; action: ActionKey };
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000";
 
 export default function YamiBaitoPage() {
   const [mode, setMode] = useState<GameMode | null>(null);
@@ -94,9 +94,7 @@ export default function YamiBaitoPage() {
     { title: "スコア", value: score, maxLabel: "/ 100", color: "red" },
   ];
 
-  const tags = currentCard?.tags?.length
-    ? currentCard.tags
-    : ["高収入", "即日払い", "未経験OK", "履歴書不要"];
+  const tags: string[] = currentCard?.tags ?? [];
 
   const wage = currentCard?.wage ?? "";
   const location = currentCard?.location ?? "都内各所（詳細は連絡時にお伝えします）";

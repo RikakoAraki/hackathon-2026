@@ -19,7 +19,7 @@ export default function Home() {
             <ModeCard
               modeLabel="MODE 01"
               title="デマ拡散ストッパー"
-              description="SNSで流れてくる「それっぽい投稿」を見分け、広げる・やめる・通報する判断を練習します。"
+              description="SNSで流れてくる「それっぽい投稿」を見分け、拡散するか無視するか判断する練習します。"
               href="/rumor"
               theme="blue"
             />
@@ -27,7 +27,7 @@ export default function Home() {
             <ModeCard
               modeLabel="MODE 02"
               title="闇バイトみきわめシミュレーター"
-              description="求人票の内容を読み、応募するか無視するか、必要なら通報するかを選ぶ練習をします。"
+              description="求人票の内容を読み、応募するか無視するかを選ぶ練習をします。"
               href="/yami-baito"
               theme="orange"
             />
