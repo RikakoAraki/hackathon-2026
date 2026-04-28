@@ -80,8 +80,6 @@ export default function YamiBaitoPage() {
     (h, i) => h.action === (mode.cards[i] as any).correct_action
   ).length;
   const score = Math.round((correctCount / mode.cards.length) * 100);
-
-  const correctCount = history.filter((h, i) => getPoints(h.action, i) === 20).length;
   const answeredCount = history.length;
   const progressValue = Math.round((answeredCount / mode.cards.length) * 100);
 
