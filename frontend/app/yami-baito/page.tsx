@@ -354,7 +354,7 @@ function StatusCard({
   const iconMap = {
     進行度: <Goal className="h-5 w-5 text-blue-500" />,
     正解数: <CircleCheck className="h-5 w-5 text-emerald-500" />,
-    獲得点: <BookOpenCheck className="h-5 w-5 text-red-500" />,
+    スコア: <BookOpenCheck className="h-5 w-5 text-red-500" />,
   };
 
   const progressWidth =
