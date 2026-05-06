@@ -86,3 +86,11 @@ npm run dev
 | ✗ 不正解 | カウントなし |
 
 結果画面では各問題の正誤と解説を確認できます。
+
+---
+
+## プレゼンテーション
+[ハッカソン2026.pdf](https://github.com/user-attachments/files/27446468/2026.pdf)
+
+## デモ動画
+[デモ動画はこちら](https://drive.google.com/file/d/17DVEQmwE6TIzg3glIwdqhoXR9vnXVJFl/view?usp=sharing)
