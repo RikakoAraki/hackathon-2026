@@ -94,3 +94,6 @@ npm run dev
 
 ## デモ動画
 [デモ動画はこちら](https://drive.google.com/file/d/17DVEQmwE6TIzg3glIwdqhoXR9vnXVJFl/view?usp=sharing)
+
+## 技育CAMP2026 ハッカソン Vol.2 にて作成
+https://talent.supporterz.jp/events/82c4c266-cde5-4b34-90fe-7c82d83a97dc/
